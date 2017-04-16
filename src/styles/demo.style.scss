@@ -1,3 +1,29 @@
+$darkColor1: #272121;
+$darkColor2: #333335;
+$darkColor3: #787c61;
+$whiteColor: #dce1e7;
+$buleColor: #3f5c7c;
+
+body {
+  margin: 0;
+  background: $whiteColor;
+}
 #root-app {
-  background: #000;
+  // background: #000;
+}
+.app {
+  width: 100%;
+  height: auto;
+}
+.container {
+  width: 970px;
+  margin: 0 auto;
+  background: $darkColor1;
+  height: 400px;
+}
+[class^='section-'] {
+  padding: 10px;
+}
+.item {
+  text-align: center;
 }
