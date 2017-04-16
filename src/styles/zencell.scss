@@ -1,7 +1,59 @@
-body {
-  box-sizing: border-box;
-  background: #fff;
+// #zencell
+
+/*
+________
+       /
+      /
+     /
+    /
+   /
+  /
+ /
+/_______
+
+*/
+$zencellGridColumns: 12;
+$padding: 5px;
+$paddingRow: 10px;
+
+$device: (
+  'desktop':        1281px,
+  'tabletWide':     1025px,
+  'tablet':         961px,
+  'tabletSmall':    641px,
+  'phoneWide':      481px,
+  'phone':          320px,
+);
+
+$names: (
+  null,
+  'l',
+  'm',
+  's'
+);
+
+@mixin createGirdColumn($number, $maxWidth, $subname) {
+  $rename: '';
+  @if($subname != null) {
+    $rename: '.zen-' + $subname + '-' + $number;
+  } @else {
+    $rename: '.zen-' + $number;
+  }
+  #{$rename} {
+    width: #{$maxWidth + '%'};
+    float: left;
+  }
 }
-#root-app {
-  
+
+@each $name in $names  {
+  @for $i from 1 through $zencellGridColumns {
+    $percen: (100 * $i) / $zencellGridColumns;
+    @include createGirdColumn($i, $percen, $name);
+  }
+}
+
+
+*, ::after, ::before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
