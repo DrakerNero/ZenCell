@@ -16,42 +16,86 @@ $zencellGridColumns: 12;
 $padding: 5px;
 $paddingRow: 10px;
 
-$device: (
-  'desktop':        1281px,
-  'tabletWide':     1025px,
-  'tablet':         961px,
-  'tabletSmall':    641px,
-  'phoneWide':      481px,
-  'phone':          320px,
+$breakPoint: (
+  'null':   1281, // desktop
+  'xl':     1025, // tabletWide
+  'l':      961,  // tablet
+  'm':      641,  // tabletSmall
+  's':      481,  // phoneWide
+  'ss':     320,  // phone
 );
 
 $names: (
   null,
+  'xl',
   'l',
   'm',
   's'
+  'ss'
 );
+
+%setAll {
+  float: left;
+}
+%setMediaWidth {
+  width: 100%;
+}
 
 @mixin createGirdColumn($number, $maxWidth, $subname) {
   $rename: '';
-  @if($subname != null) {
+  @if ($subname != 'null') {
     $rename: '.zen-' + $subname + '-' + $number;
   } @else {
     $rename: '.zen-' + $number;
   }
   #{$rename} {
     width: #{$maxWidth + '%'};
-    float: left;
+    @extend %setAll;
   }
 }
 
-@each $name in $names  {
-  @for $i from 1 through $zencellGridColumns {
-    $percen: (100 * $i) / $zencellGridColumns;
-    @include createGirdColumn($i, $percen, $name);
+.row::before, .row::after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+
+@mixin mediaWidthDevice($name, $width) {
+  @media (max-width: $width + 'px') {
+    @content;
   }
 }
 
+@each $name, $width in $breakPoint {
+  $rename: '';
+  @if ($name != 'null') {
+    @media (max-width: $width + 'px') {
+      @for $i from 1 through $zencellGridColumns {
+        $rename: '.zen-' + $name + '-' + $i;
+        $percen: (100 * $i) / $zencellGridColumns;
+        #{$rename} {
+          width: #{$percen + '%'};
+        }
+      }
+    }
+  } @else {
+    @for $i from 1 through $zencellGridColumns {
+      $rename: $rename + '.zen-' + $i;
+      @if ($i != 1 && $i < $zencellGridColumns) {
+        $rename: $rename + ', ';
+      } @else {
+
+      }
+      $percen: (100 * $i) / $zencellGridColumns;
+      @include createGirdColumn($i, $percen, $name);
+    }
+    @media screen and (max-width: $width + 'px') {
+      #{$rename} {
+        width: 100%;
+      }
+    }
+  }
+}
 
 *, ::after, ::before {
 	-webkit-box-sizing: border-box;

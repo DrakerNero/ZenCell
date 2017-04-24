@@ -16,14 +16,30 @@ body {
   height: auto;
 }
 .container {
-  width: 970px;
+  max-width: 970px;
   margin: 0 auto;
-  background: $darkColor1;
-  height: 400px;
-}
-[class^='section-'] {
+  background: $darkColor3;
+  // height: 400px;
   padding: 10px;
+}
+.section {
+  padding: 10px;
+  width: 100%;
+}
+.row .item {
+  margin: 1px;
 }
 .item {
   text-align: center;
+  background: $darkColor1;
+  color: $whiteColor;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 200px;
+  position: relative;
+  > span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    font-size: 20px;
+  }
 }
