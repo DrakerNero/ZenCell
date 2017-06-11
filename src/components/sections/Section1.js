@@ -6,7 +6,7 @@ const Section1 = () => (
       <div className="zen-6">
         <div className="item"><span>zen-l-6</span></div>
       </div>
-      <div className="zen-12">
+      <div className="zen-6">
         <div className="item"><span>zen-6</span></div>
       </div>
     </div>

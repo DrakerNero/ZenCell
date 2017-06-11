@@ -12,50 +12,51 @@ ________
 /_______
 
 */
+
 $zencellGridColumns: 12;
 $padding: 5px;
-$paddingRow: 10px;
+$rowPadding: 10px;
+$besidePadding: 10px;
 $minWidth: 360;
-
-$breakPoint: (
-  'null':   1281, // desktop
-  'xl':     1025, // tabletWide
-  'l':      961,  // tablet
-  'm':      641,  // tabletSmall
-  's':      481,  // phoneWide
-  'ss':     320,  // phone
+$containerWidth: '1180px';
+$breakPoint: ( 'null': 1281, // desktop
+'xl': 1025, // tabletWide
+'l': 961, // tablet
+'m': 641, // tabletSmall
+'s': 481, // phoneWide
+'ss': 320, // phone
 );
-
-$names: (
-  null,
-  'xl',
-  'l',
-  'm',
-  's'
-  'ss'
-);
-
+$names: ( null, 'xl', 'l', 'm', 's' 'ss');
 %setAll {
   float: left;
 }
+
 %setMediaWidth {
   width: 100%;
 }
 
+%addBesidePadding {
+  padding-left: $besidePadding;
+  padding-right: $besidePadding;
+}
+
 @mixin createGirdColumn($number, $maxWidth, $subname) {
   $rename: '';
-  @if ($subname != 'null') {
+  @if ($subname !='null') {
     $rename: '.zen-' + $subname + '-' + $number;
-  } @else {
+  }
+  @else {
     $rename: '.zen-' + $number;
   }
   #{$rename} {
     width: #{$maxWidth + '%'};
     @extend %setAll;
+    @extend %addBesidePadding;
   }
 }
 
-.row::before, .row::after {
+.row::before,
+.row::after {
   display: table;
   content: " ";
   clear: both;
@@ -66,48 +67,64 @@ $names: (
     @content;
   }
 }
+
 // gridview
-@each $name, $width in $breakPoint {
+@each $name,
+$width in $breakPoint {
   $rename: '';
-  @if ($name != 'null') {
+  @if ($name !='null') {
     @media (max-width: $width + 'px') {
       @for $i from 1 through $zencellGridColumns {
         $rename: '.zen-' + $name + '-' + $i;
         $percen: (100 * $i) / $zencellGridColumns;
         #{$rename} {
           width: #{$percen + '%'};
+          padding-right: $besidePadding;
+          padding-left: $besidePadding; // @extend .addBesidePadding;
         }
       }
     }
-  } @else {
+  }
+  @else {
     @for $i from 1 through $zencellGridColumns {
       $rename: $rename + '.zen-' + $i;
-      @if ($i != 1 && $i < $zencellGridColumns) {
+      @if ($i !=1 && $i < $zencellGridColumns) {
         $rename: $rename + ', ';
-      } @else {
-
       }
+      @else {}
       $percen: (100 * $i) / $zencellGridColumns;
       @include createGirdColumn($i, $percen, $name);
     }
     @media screen and (max-width: $minWidth + 'px') {
       #{$rename} {
         width: 100%;
+        padding-right: $besidePadding;
+        padding-left: $besidePadding; // @extend .addBesidePadding;
       }
     }
   }
 }
 
-@each $name, $width in $breakPoint {
+@each $name,
+$width in $breakPoint {
   $nameClass: '.zen-' + $name + '-hidden';
   @media screen and (max-width: $width + 'px') {
     #{$nameClass} {
-      display: none;
+      display: none !important;
     }
   }
 }
 
-*, ::after, ::before {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+*,
+ ::after,
+ ::before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
+
+.container {
+  width: $containerWidth;
+}
+
+
+/* zencell by sutthirot tawanthananthon */
