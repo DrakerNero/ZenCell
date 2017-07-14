@@ -1,15 +1,15 @@
 // #zencell
 
 /*
-________
-       /
-      /
-     /
-    /
-   /
-  /
- /
-/_______
+________     ________    
+       /    |            |\       |
+      /     |            | \      |
+     /      |            |  \     |
+    /       |________    |   \    |
+   /        |            |    \   |
+  /         |            |     \  |
+ /          |            |      \ |
+/_______    |________    |       \|
 
 */
 
@@ -18,7 +18,7 @@ $padding: 5px;
 $rowPadding: 10px;
 $besidePadding: 10px;
 $minWidth: 360;
-$containerWidth: '1180px';
+$containerWidth: 1180px;
 $breakPoint: ( 'null': 1281, // desktop
 'xl': 1025, // tabletWide
 'l': 961, // tablet
@@ -40,6 +40,61 @@ $names: ( null, 'xl', 'l', 'm', 's' 'ss');
   padding-right: $besidePadding;
 }
 
+.container {
+  width: $containerWidth;
+  margin-left: auto;
+  margin-right: auto;
+  &:before,
+  &:after {
+    display: table;
+    content: " ";
+  }
+}
+
+.flex-wrapper {
+  display: flex;
+  .flex-left {
+    margin-left: auto;
+  }
+  .flex-right {
+    margin-right: auto;
+  }
+  .flex-middle {
+    align-items: center;
+  }
+}
+
+*,
+ ::after,
+ ::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.row {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.no-gutter>[class*=zen] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+[class*=zen]::before,
+[class*=zen]::after {
+  content: " ";
+  clear: both;
+}
+
+.row::before,
+.row::after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+
 @mixin createGirdColumn($number, $maxWidth, $subname) {
   $rename: '';
   @if ($subname !='null') {
@@ -55,12 +110,8 @@ $names: ( null, 'xl', 'l', 'm', 's' 'ss');
   }
 }
 
-.row::before,
-.row::after {
-  display: table;
-  content: " ";
-  clear: both;
-}
+
+/* Z E N C E L L */
 
 @mixin mediaWidthDevice($name, $width) {
   @media (max-width: $width + 'px') {
@@ -74,6 +125,9 @@ $width in $breakPoint {
   $rename: '';
   @if ($name !='null') {
     @media (max-width: $width + 'px') {
+      .container {
+        width: $width + 'px';
+      }
       @for $i from 1 through $zencellGridColumns {
         $rename: '.zen-' + $name + '-' + $i;
         $percen: (100 * $i) / $zencellGridColumns;
@@ -115,15 +169,24 @@ $width in $breakPoint {
   }
 }
 
-*,
- ::after,
- ::before {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+@media (max-width: 1180px) {
+  .container {
+    width: 100%;
+  }
 }
 
-.container {
-  width: $containerWidth;
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
 }
 
 
